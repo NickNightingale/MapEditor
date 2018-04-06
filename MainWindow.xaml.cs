@@ -33,10 +33,9 @@ namespace MapEditor
 		{
 			Loaded -= MainWindow_Loaded;
 
-			var view = new MapView();
-			var model = new Map();
-			view.DataContext = model;
-			var controller = new MapController(model, view);
+			var view = new MapEditorView();
+			var model = new MapEditorModel();
+			var controller = new MapEditorController(model, view);
 			Host.Content = view;
 
 			controller.Start();

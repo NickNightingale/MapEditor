@@ -57,14 +57,19 @@
     <Compile Include="AttachedProperties\DragDropHelper\DragDropUtilities.cs" />
     <Compile Include="AttachedProperties\DragDropHelper\DraggedAdorner.cs" />
     <Compile Include="AttachedProperties\DragDropHelper\InsertionAdorner.cs" />
-    <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="Commands\Commands.cs" />
+    <Compile Include="Controllers\MapEditorController.cs" />
     <Compile Include="DataModel.cs" />
     <Compile Include="ExtensionMethods\IEnumerable.cs" />
     <Compile Include="Utilities\ObservableCollection2.cs" />
     <Compile Include="Utilities\Singleton.cs" />
     <Compile Include="ViewModels\Map.cs" />
+    <Compile Include="ViewModels\MapEditorModel.cs" />
     <Compile Include="ViewModels\Tile.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\MapEditorView.xaml.cs">
+      <DependentUpon>MapEditorView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MapView.xaml.cs">
       <DependentUpon>MapView.xaml</DependentUpon>
     </Compile>
@@ -80,6 +85,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\MapEditorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\MapView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

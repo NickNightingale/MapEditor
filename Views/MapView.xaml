@@ -10,17 +10,17 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="TileTemplate">
-
-                    <Grid 
-                        Width="60" 
-                        Background="{Binding Path=Brush}">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="30" />
-                            <RowDefinition Height="30" />
-                        </Grid.RowDefinitions>
-                        <TextBlock Text="{Binding Path=GridX}" />
-                        <TextBlock Grid.Row="1" Text="{Binding Path=GridY}" />
-                    </Grid>
+                <Grid 
+                    Width="60" 
+                    Background="{Binding Path=Brush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                    </Grid.RowDefinitions>
+                    <Image Source="{Binding Path=PreviewFile}" Grid.RowSpan="2" />
+                    <TextBlock Text="{Binding Path=GridX}" />
+                    <TextBlock Grid.Row="1" Text="{Binding Path=GridY}" />
+                </Grid>
             </DataTemplate>
             <DataTemplate x:Key="DraggedTileTemplate">
                 <Grid>

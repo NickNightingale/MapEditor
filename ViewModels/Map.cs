@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
+using MapEditor.Utilities;
 
 namespace MapEditor.ViewModels
 {
@@ -75,19 +78,88 @@ namespace MapEditor.ViewModels
 
 		public void UpdateTileGridPositions()
 		{
-			for (int i = 0; i < ExtentY; ++i)
+			//for (int i = 0; i < ExtentY; ++i)
+			//{
+			//	for (int j = 0; j < ExtentX; ++j)
+			//	{
+			//		var index = i + j * ExtentY;
+			//		if (index >= Tiles.Count)
+			//		{
+			//			break;
+			//		}
+			//		Tiles[i + j * ExtentY].GridX = i;
+			//		Tiles[i + j * ExtentY].GridY = j;
+			//	}
+			//}
+		}
+
+		public static Map FromFile(string fileName)
+		{
+			using (var file = File.OpenText(fileName))
 			{
-				for (int j = 0; j < ExtentX; ++j)
+				return Map.FromStream(file, Path.GetDirectoryName(fileName));
+			}
+		}
+
+		public static Map FromStream(StreamReader stream, string mapFolder)
+		{
+			int minX = int.MaxValue, maxX = -int.MaxValue;
+			int minY = int.MaxValue, maxY = -int.MaxValue;
+			var tiles = new Dictionary<string, Tile>();
+			while (!stream.EndOfStream)
+			{
+				if (stream.ReadLine().Contains("[map]"))
 				{
-					var index = i + j * ExtentY;
-					if (index >= Tiles.Count)
-					{
-						break;
-					}
-					Tiles[i + j * ExtentY].GridX = i;
-					Tiles[i + j * ExtentY].GridY = j;
+					var tile = Tile.FromStream(stream, mapFolder);
+					if (tile.GridX < minX) minX = tile.GridX;
+					if (tile.GridX > maxX) maxX = tile.GridX;
+					if (tile.GridY < minY) minY = tile.GridY;
+					if (tile.GridY > maxY) maxY = tile.GridY;
+					tiles.Add(GetKey(tile.GridX, tile.GridY), tile);
 				}
 			}
+			var map = new Map
+			{
+				ExtentX = maxX - minX + 1,
+				ExtentY = maxY - minY + 1
+			};
+			for (int y = maxY; y >= minY; --y)
+			{
+				for (int x = minX; x <= maxX; ++x)
+				{
+					if (tiles.TryGetValue(GetKey(x, y), out Tile tile))
+					{
+						map.Tiles.Add(tile);
+					}
+					else
+					{
+						map.Tiles.Add(new Tile { GridX = x, GridY = y, Brush = Brushes.Gray });
+					}
+				}
+			}
+			return map;
+		}
+
+		static string GetKey(int x, int y)
+		{
+			return $"{x},{y}";
+		}
+	}
+
+
+	public class TileComparer :  Singleton<TileComparer>, IComparer<Tile>
+	{
+		public int Compare(Tile x, Tile y)
+		{
+			if (x.GridY == y.GridY && x.GridX == y.GridX)
+			{
+				return 0;
+			}
+			if (x.GridY == y.GridY)
+			{
+				return x.GridX > y.GridX ? 1 : -1;
+			}
+			return x.GridY > y.GridY ? 1 : -1;
 		}
 	}
 }
