@@ -53,9 +53,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AttachedProperties\DragDropHelper\DragDropHelper.cs" />
+    <Compile Include="AttachedProperties\DragDropHelper\DragDropUtilities.cs" />
+    <Compile Include="AttachedProperties\DragDropHelper\DraggedAdorner.cs" />
+    <Compile Include="AttachedProperties\DragDropHelper\InsertionAdorner.cs" />
+    <Compile Include="Controllers\MapController.cs" />
+    <Compile Include="DataModel.cs" />
+    <Compile Include="ExtensionMethods\IEnumerable.cs" />
+    <Compile Include="Utilities\ObservableCollection2.cs" />
+    <Compile Include="Utilities\Singleton.cs" />
     <Compile Include="ViewModels\Map.cs" />
     <Compile Include="ViewModels\Tile.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
+    <Compile Include="Views\MapView.xaml.cs">
+      <DependentUpon>MapView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -68,6 +80,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Views\MapView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -95,9 +111,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-    <Folder Include="Views\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

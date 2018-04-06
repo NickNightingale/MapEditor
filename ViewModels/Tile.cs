@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media;
 
 namespace MapEditor.ViewModels
 {
@@ -31,6 +32,20 @@ namespace MapEditor.ViewModels
 				if (_gridY != value)
 				{
 					_gridY = value;
+					RaisePropertyChanged();
+				}
+			}
+		}
+
+		private Brush _brush;
+		public Brush Brush
+		{
+			get { return _brush; }
+			set
+			{
+				if (_brush != value)
+				{
+					_brush = value;
 					RaisePropertyChanged();
 				}
 			}
